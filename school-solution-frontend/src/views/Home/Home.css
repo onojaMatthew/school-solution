@@ -20,11 +20,11 @@
 }
 
 .overlay-text {
-  font-size: 44px;
+  font-size: 38px;
   color: #fff;
   font-weight: bolder;
   text-shadow: 0 0 #ccc;
-  line-height: 40px
+  /* line-height: 40px */
 }
 .text-wrap {
   margin-top: 250px;

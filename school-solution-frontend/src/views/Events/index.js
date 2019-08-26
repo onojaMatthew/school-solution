@@ -28,8 +28,8 @@ class Events extends Component {
                     
                   >></i> <span style={{
                     background: "green",
-                    padding: 7,
-                    borderRadius: "7px",
+                    padding: 3,
+                    borderRadius: "3px",
                     fontWeight: "bold"
                   }}>{match.path.slice(1)}</span></p>
                 </div>

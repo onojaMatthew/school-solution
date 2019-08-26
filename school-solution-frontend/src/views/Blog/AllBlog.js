@@ -26,8 +26,8 @@ class AllBlog extends Component {
                     
                   >></i> <span style={{
                     background: "green",
-                    padding: 7,
-                    borderRadius: "7px",
+                    padding: 3,
+                    borderRadius: "3px",
                     fontWeight: "bold"
                   }}>{path.charAt(0).toUpperCase() + path.slice(1)}</span></p>
                 </div>

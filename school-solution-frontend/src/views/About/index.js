@@ -33,11 +33,8 @@ class About extends Component {
                     <span
                       style={{
                         background: "green",
-                        paddingRight: 7,
-                        paddingBottom: 7,
-                        paddingLeft: 7,
-                        paddingTop: 7,
-                        borderRadius: "7px",
+                        padding: 3,
+                        borderRadius: "3px",
                         fontWeight: "bold"
                       }}
                     >
