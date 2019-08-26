@@ -21,8 +21,8 @@ services:
       dockerfile: Dockerfile.dev
       context: ./skool-solution
     expose: 4200
-    environment:
-      - DBUSER=
+    # environment:
+      # - DBUSER=
     volume:
       - ./app/node_modules
       - ./skool-solution:/app
