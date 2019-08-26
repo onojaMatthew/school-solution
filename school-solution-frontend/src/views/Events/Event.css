@@ -1,0 +1,51 @@
+
+.top-img {
+  background-image: url("../../assets/image/event1.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 300px;
+  width: 100%;
+}
+.events-banner .content {
+  margin-top: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .events-banner .content {
+    margin-top: 100px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .events-banner h2 {
+    font-size: 30px !important;
+    text-align: center;
+  }
+}
+.events-banner h2 {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 50px;
+}
+.events-banner p {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+}
+.event-contents {
+  background: #fff;
+  padding: 70px;
+}
+@media only screen and (max-width: 600px) {
+  .event-contents {
+    background: #fff;
+    padding: 10px;
+  }
+}
+.event-contents .heading {
+  font-size: 35px;
+  font-weight: bolder;
+}
+button {
+  border: 1px solid green !important;
+}

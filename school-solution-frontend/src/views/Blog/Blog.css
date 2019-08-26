@@ -1,0 +1,91 @@
+
+.blog-contents {
+  padding: 70px;
+}
+@media only screen and (max-width: 600px) {
+  .blog-contents {
+    padding: 10px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .content .text-center {
+    font-size: 25px !important;
+  }
+}
+
+.blog-contents .button {
+  background: green;
+}
+.blog-a {
+  padding-right: 10px;
+  border-right: 1px solid #e7e7e7;
+  font-weight: 500;
+  font-size: 16px;
+  margin-right: 10px;
+  padding-top: 0px !important;
+  margin-top: 15px;
+}
+.blog-a:hover {
+  text-decoration: none;
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: #2c2c2c;
+  line-height: normal;
+  font-size: 0.8571em;
+  padding-left: 0px !important;
+}
+.form-control:focus {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  color: #2c2c2c;
+  line-height: normal;
+  font-size: 0.8571em;
+  padding-left: 0px !important;
+}
+.comment-form {
+  border: 1px solid #eee;
+  padding: 15px;
+}
+.comment-form h3 {
+  font-weight: bold;
+}
+textarea.form-control {
+  border-bottom: none;
+  font-size: 16px;
+}
+textarea.form-control:focus {
+  border-bottom: none;
+  font-size: 16px;
+  line-height: 2;
+}
+.input-group .search-form {
+  border-bottom: none !important;
+  border: 1px solid #eee !important;
+  background-color: transparent;
+  border-radius: 25px;
+  color: #2c2c2c;
+  line-height: normal;
+  font-size: 0.8571em;
+  padding-left: 10px !important;
+}
+@media only screen and (max-width: 600px) {
+  .input-group {
+    margin-top: 20px;
+  }
+}
+.input-group-prepend .input-group-text {
+  background-color: transparent;
+  border: 1px solid #E3E3E3;
+  border-radius: 25px;
+  color: #888;
+  border-left: none;
+  cursor: pointer !important;
+}
+.recent-post {
+  box-shadow: 1px 2px 5px #6b6b6b !important;
+}
