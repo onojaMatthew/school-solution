@@ -73,7 +73,7 @@ class LoginForm extends React.Component {
   render() {
     const { email, password } = this.state.fields;
     if (this.props.login.isLoginSuccess === true) {
-      return <Redirect to={"/student"} />
+      return <Redirect to={"/students"} />
     }
 
     return (
@@ -94,7 +94,7 @@ class LoginForm extends React.Component {
                         }}
                         alt=""
                       />
-                      <h5 className="lead">Sign In as a Teacher</h5>
+                      <h5 className="lead">Sign In as a Student</h5>
                     </Col>
                   </Row>
                   <Row>
@@ -120,7 +120,7 @@ class LoginForm extends React.Component {
                           <span style={{ color: "#ff0000" }}>{this.state.errors["password"]}</span>
                         </div>
                         <Button>Sign In</Button>
-                      </form>rm>
+                      </form>
                     </Col>
                   </Row>
                 </CardBody>

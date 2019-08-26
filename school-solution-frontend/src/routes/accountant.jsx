@@ -9,49 +9,49 @@ import UserPage from "../views/UserPage/UserPage.jsx";
 
 var accountRoutes = [
   {
-    path: "/accountant",
+    path: "/accountants",
     exact: true,
     name: "Accountant",
     icon: "design_app",
     component: Accountant
   },
   {
-    path: "/accountant/icons",
+    path: "/accountants/icons",
     name: "Icons",
     exact: true,
     icon: "design_image",
     component: Icons
   },
   {
-    path: "/accountant/maps",
+    path: "/accountants/maps",
     name: "Maps",
     exact: true,
     icon: "location_map-big",
     component: Maps
   },
   {
-    path: "/accountant/notifications",
+    path: "/accountants/notifications",
     name: "Notifications",
     exact: true,
     icon: "ui-1_bell-53",
     component: Notifications
   },
   {
-    path: "/accountant/user-page",
+    path: "/accountants/user-page",
     name: "User Profile",
     exact: true,
     icon: "users_single-02",
     component: UserPage
   },
   {
-    path: "/accountant/extended-tables",
+    path: "/accountants/extended-tables",
     name: "Table List",
     exact: true,
     icon: "files_paper",
     component: TableList
   },
   {
-    path: "/accountant/typography",
+    path: "/accountants/typography",
     name: "Typography",
     exact: true,
     icon: "design-2_ruler-pencil",
@@ -59,7 +59,7 @@ var accountRoutes = [
   },
   {
     pro: true,
-    path: "/accountant/upgrade",
+    path: "/accountants/upgrade",
     exact: true,
     name: "Upgrade to PRO",
     icon: "objects_spaceship",
@@ -67,9 +67,10 @@ var accountRoutes = [
   },
   {
     redirect: true,
-    path: "/accountant",
+    path: "/accountants",
     pathTo: "/accountant",
     name: "Accountant"
   }
 ];
+
 export default accountRoutes;

@@ -70,7 +70,7 @@ class LoginForm extends React.Component {
     const { email, password } = this.state.fields;
     
     if (this.props.login.isLoginSuccess) {
-      return <Redirect to={"/accountant"} />
+      return <Redirect to={"/accountants"} />
     }
 
     return (

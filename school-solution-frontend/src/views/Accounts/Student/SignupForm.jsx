@@ -105,7 +105,7 @@ class SignupForm extends React.Component {
                         }}
                         alt=""
                       />
-                      <h5 className="lead">Sign Up as a Teacher</h5>
+                      <h5 className="lead">Sign Up as a Student</h5>
                     </Col>
                   </Row>
                   <Row>

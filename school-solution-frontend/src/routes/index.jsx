@@ -17,14 +17,46 @@ import TeacherLogin from "../views/Accounts/Teacher/LoginContainer";
 import TeacherSignup from "../views/Accounts/Teacher/SignupContainer";
 
 var indexRoutes = [
-  { path: "/dashboard", name: "Dashboard", component: Dashboard },
-  { path: "/accountant", name: "Accountant", component: Accountant },
-  { path: "/student", name: "Student", component: Student },
-  { path: "/teacher", name: "Teacher", component: Teacher },
-  { path: "/about", name: "About", component: About },
-  { path: "/blog", name: "Blog", component: Blog },
-  { path: "/events", name: "Events", component: Events },
-  { path: "/gallery", name: "Gallery", component: Gallery },
+  { 
+    path: "/dashboard", 
+    name: "Dashboard", 
+    component: Dashboard 
+  },
+  { 
+    path: "/accountants", 
+    name: "Accountant", 
+    component: Accountant 
+  },
+  { 
+    path: "/students", 
+    name: "Student", 
+    component: Student 
+  },
+  { 
+    path: "/teachers", 
+    name: "Teacher", 
+    component: Teacher 
+  },
+  { 
+    path: "/about", 
+    name: "About", 
+    component: About 
+  },
+  { 
+    path: "/blog", 
+    name: "Blog", 
+    component: Blog 
+  },
+  { 
+    path: "/events", 
+    name: "Events", 
+    component: Events 
+  },
+  { 
+    path: "/gallery", 
+    name: "Gallery", 
+    component: Gallery 
+  },
   {
     path: "/admin/signup",
     name: "Admin Sigup",

@@ -87,8 +87,8 @@ class Header extends Component {
                   <img
                     src={AcademicCap}
                     style={{
-                      width: 80,
-                      height: 50
+                      width: 40,
+                      height: 30
                     }}
                     alt=""
                   />
@@ -150,9 +150,10 @@ class Header extends Component {
               </NavItem>
               <Dropdown
                 nav
-                navbar-expand-lg
+                // navbar-expand-lg
                 isOpen={this.state.dropdownOpen}
                 toggle={this.toggle}
+
               >
                 <DropdownToggle nav caret>
                   Sign up
@@ -173,8 +174,8 @@ class Header extends Component {
                 </DropdownMenu>
               </Dropdown>
               <Dropdown
-                nav
-                navbar-expand-lg
+                // nav
+                // navbar-expand-lg
                 isOpen={this.state.signinOpen}
                 toggle={this.toggleSignin}
               >

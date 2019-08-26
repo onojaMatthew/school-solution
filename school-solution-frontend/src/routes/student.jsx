@@ -9,49 +9,49 @@ import UserPage from "../views/UserPage/UserPage.jsx";
 
 var studentRoutes = [
   {
-    path: "/student",
+    path: "/students",
     exact: true,
     name: "Student",
     icon: "design_app",
     component: Student
   },
   {
-    path: "/student/icons",
+    path: "/students/icons",
     name: "Icons",
     exact: true,
     icon: "design_image",
     component: Icons
   },
   {
-    path: "/student/maps",
+    path: "/students/maps",
     name: "Maps",
     exact: true,
     icon: "location_map-big",
     component: Maps
   },
   {
-    path: "/student/notifications",
+    path: "/students/notifications",
     name: "Notifications",
     exact: true,
     icon: "ui-1_bell-53",
     component: Notifications
   },
   {
-    path: "/student/user-page",
+    path: "/students/user-page",
     name: "User Profile",
     exact: true,
     icon: "users_single-02",
     component: UserPage
   },
   {
-    path: "/student/extended-tables",
+    path: "/students/extended-tables",
     name: "Table List",
     exact: true,
     icon: "files_paper",
     component: TableList
   },
   {
-    path: "/student/typography",
+    path: "/students/typography",
     name: "Typography",
     exact: true,
     icon: "design-2_ruler-pencil",
@@ -59,7 +59,7 @@ var studentRoutes = [
   },
   {
     pro: true,
-    path: "/student/upgrade",
+    path: "/students/upgrade",
     exact: true,
     name: "Upgrade to PRO",
     icon: "objects_spaceship",
@@ -67,7 +67,7 @@ var studentRoutes = [
   },
   {
     redirect: true,
-    path: "/student",
+    path: "/students",
     pathTo: "/student",
     name: "Student"
   }

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Auth from "../../helper/Auth";
+import history from "../../helper/history";
 import {
   Collapse,
   Navbar,
@@ -19,6 +21,7 @@ import {
 } from "reactstrap";
 
 import dashboardRoutes from "../../routes/dashboard.jsx";
+import hist from "../../helper/history";
 
 class Header extends React.Component {
   constructor(props) {
@@ -104,6 +107,13 @@ class Header extends React.Component {
       this.refs.sidebarToggle.classList.toggle("toggled");
     }
   }
+
+  // Logs out user
+  handleLogout = () => {
+    Auth.deauthenticateUser();
+    history.push("/");
+  }
+
   render() {
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
@@ -147,7 +157,7 @@ class Header extends React.Component {
             navbar
             className="justify-content-end"
           >
-            <form>
+            {/* <form>
               <InputGroup className="no-border">
                 <Input placeholder="Search..." />
                 <InputGroupAddon addonType="append">
@@ -156,27 +166,27 @@ class Header extends React.Component {
                   </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
-            </form>
+            </form> */}
             <Nav navbar>
               <NavItem>
-                <Link to="#pablo" className="nav-link">
+                {/* <Link to="#pablo" className="nav-link">
                   <i className="now-ui-icons media-2_sound-wave" />
                   <p>
                     <span className="d-lg-none d-md-block">Stats</span>
                   </p>
-                </Link>
+                </Link> */}
               </NavItem>
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
                 toggle={e => this.dropdownToggle(e)}
               >
-                <DropdownToggle caret nav>
+                {/* <DropdownToggle caret nav>
                   <i className="now-ui-icons location_world" />
                   <p>
                     <span className="d-lg-none d-md-block">Some Actions</span>
                   </p>
-                </DropdownToggle>
+                </DropdownToggle> */}
                 <DropdownMenu right>
                   <DropdownItem tag="a">Action</DropdownItem>
                   <DropdownItem tag="a">Another Action</DropdownItem>
@@ -184,12 +194,12 @@ class Header extends React.Component {
                 </DropdownMenu>
               </Dropdown>
               <NavItem>
-                <Link to="#pablo" className="nav-link">
-                  <i className="now-ui-icons users_single-02" />
+                <div className="nav-link" onClick={this.handleLogout}>
+                  <i className="now-ui-icons media-1_button-power" />
                   <p>
-                    <span className="d-lg-none d-md-block">Account</span>
+                    <span className="d-lg-block d-md-block">Logout</span>
                   </p>
-                </Link>
+                </div>
               </NavItem>
             </Nav>
           </Collapse>

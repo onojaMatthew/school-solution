@@ -73,7 +73,7 @@ class LoginForm extends React.Component {
   render() {
     const { email, password } = this.state.fields;
     if (this.props.login.isLoginSuccess === true) {
-      return <Redirect to={"/teacher"} />
+      return <Redirect to={"/teachers"} />
     }
 
     return (
