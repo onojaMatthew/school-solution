@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Auth from "../../helper/Auth";
 import history from "../../helper/history";
+import { connect } from "react-redux";
 import {
   Collapse,
   Navbar,
@@ -21,7 +22,7 @@ import {
 } from "reactstrap";
 
 import dashboardRoutes from "../../routes/dashboard.jsx";
-import hist from "../../helper/history";
+import { logout } from "../../store/actions/actions_login";
 
 class Header extends React.Component {
   constructor(props) {
@@ -109,12 +110,14 @@ class Header extends React.Component {
   }
 
   // Logs out user
-  handleLogout = () => {
+  handleLogout = async () => {
     Auth.deauthenticateUser();
+    await this.props.logout();
     history.push("/");
   }
 
   render() {
+    console.log(this.props)
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
       <Navbar
@@ -209,4 +212,10 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+  const dispatchToProps = {
+    logout: () => dispatch(logout())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Header);
