@@ -75,7 +75,7 @@ export const userLogoutFailed = (error) => {
 export const logout = () => {
   return dispatch => {
     dispatch(userLogoutStart());
-    axios.get(`http:localhost:4000/api/v1/signout`)
+    axios.get(`http://localhost:4000/api/v1/signout`)
       .then(resp => {
         dispatch(userLogoutSuccess(resp.data));
       })

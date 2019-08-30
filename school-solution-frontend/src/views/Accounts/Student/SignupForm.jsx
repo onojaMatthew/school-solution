@@ -85,7 +85,6 @@ class SignupForm extends React.Component {
     if (isSignupSuccess === true) {
       return <Redirect to={"/student/signin"} />
     }
-
     return (
       <div>
         {/* <PanelHeader size="sm" /> */}

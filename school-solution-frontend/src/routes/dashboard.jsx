@@ -24,7 +24,7 @@ var dashRoutes = [
   {
     path: "/dashboard",
     exact: true,
-    name: "Admin",
+    name: "Home",
     icon: "design_app",
     component: Dashboard
   },

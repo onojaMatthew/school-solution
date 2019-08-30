@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Auth from "../../helper/Auth";
 import history from "../../helper/history";
 import { connect } from "react-redux";
@@ -11,14 +11,14 @@ import {
   Nav,
   NavItem,
   Dropdown,
-  DropdownToggle,
+  // DropdownToggle,
   DropdownMenu,
   DropdownItem,
   Container,
-  InputGroup,
-  InputGroupText,
-  InputGroupAddon,
-  Input
+  // InputGroup,
+  // InputGroupText,
+  // InputGroupAddon,
+  // Input
 } from "reactstrap";
 
 import dashboardRoutes from "../../routes/dashboard.jsx";
@@ -117,7 +117,6 @@ class Header extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       // add or remove classes depending if we are on full-screen-maps page or not
       <Navbar
@@ -216,6 +215,8 @@ const mapDispatchToProps = (dispatch) => {
   const dispatchToProps = {
     logout: () => dispatch(logout())
   }
+
+  return dispatchToProps;
 }
 
 export default connect(null, mapDispatchToProps)(Header);

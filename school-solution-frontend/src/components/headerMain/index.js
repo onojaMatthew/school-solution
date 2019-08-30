@@ -197,6 +197,7 @@ class Header extends Component {
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
+              
             </Nav>
           </div>
         </div>
