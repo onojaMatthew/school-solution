@@ -7,29 +7,65 @@ import {
   CardTitle,
   Row,
   Col,
-  // UncontrolledDropdown,
-  // DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem,
   Table
 } from "reactstrap";
-// react plugin used to create charts
-// import { Line, Bar } from "react-chartjs-2";
-// function that returns a color based on an interval of numbers
 
 import { PanelHeader, Stats, CardCategory, Tasks } from "../../components";
-
-// import {
-//   dashboardPanelChart,
-//   dashboardShippedProductsChart,
-//   dashboardAllProductsChart,
-//   dashboard24HoursPerformanceChart
-// } from "../../variables/charts.jsx";
-
 import { tasks } from "../../variables/general.jsx";
 
 class Dashboard extends React.Component {
-  render() {
+  state = {
+    term: ["First Term", "Second Term", "Third Term"],
+    isUpdate: false,
+    currentSession: "2019/2020",
+    currentTerm: "First Term"
+  }
+
+  toggleIsUpdate = () => {
+    this.setState((prevState) => {
+      return {
+        isUpdate: !prevState.isUpdate
+      }
+    });
+  }
+
+  renderForm = () => {
+    const { term, isUpdate } = this.state;
+    const date = new Date();
+    const selectTerm = term.map(term => (
+      <option value={term}>{term}</option>
+    ));
+
+    if (isUpdate) {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <select className="form-control">
+              <option>Select Session</option>
+              <option>{`${date.getFullYear()}/${date.getFullYear() + 1}`}</option>
+              <option>{`${date.getFullYear() + 1}/${date.getFullYear() + 2}`}</option>
+              <option>{`${date.getFullYear() + 2}/${date.getFullYear() + 3}`}</option>
+            </select>
+            <select className="form-control">
+              <option>Select Term</option>
+              {selectTerm}
+            </select>
+          </div>
+          <button className="btn btn-primary">Submit</button>
+        </form>
+      )
+    } else {
+      return (
+        <div className="form-group">
+          <input type="text" value={this.state.currentSession} className="form-control" />
+          <input type="text" value={this.state.currentTerm} className="form-control" />
+        </div>
+      )
+    }
+  }
+  render() { 
+    const {term, isUpdate } = this.state;
+    
     return (
       <div>
         <PanelHeader
@@ -121,7 +157,27 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} md={9}></Col>
+            <Col xs={12} md={9}>
+            <button 
+              className="btn btn-default" 
+              style={{ 
+                float: "right", 
+                marginBottom: 0,
+                border: "0px"
+              }}
+              onClick={this.toggleIsUpdate}
+            >
+              Update/Change
+            </button>
+              <Card>
+                <CardHeader>
+                  {isUpdate ? "UPDATE CURRENT ACADEMIC INFORMATION" : "CURRENT ACADEMIC SESSION"}
+                </CardHeader>
+                <CardBody>
+                  {this.renderForm()}
+                </CardBody>
+              </Card>
+            </Col>
             <Col xs={12} md={3}></Col>
           </Row>
           <Row>
