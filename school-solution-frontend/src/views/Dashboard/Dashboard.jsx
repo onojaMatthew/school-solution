@@ -121,6 +121,10 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           <Row>
+            <Col xs={12} md={9}></Col>
+            <Col xs={12} md={3}></Col>
+          </Row>
+          <Row>
             <Col xs={12} md={6}>
               <Card className="card-tasks">
                 <CardHeader>
