@@ -2,11 +2,13 @@ import { combineReducers } from "redux";
 import signup from "./reducers_signup";
 import login from "./reducers_login";
 import teachers from "./reducers_teacher";
+import academic from "./reducers_academic_info";
 
 const rootReducer = combineReducers({
   signup,
   login,
-  teachers
+  teachers,
+  academic,
 });
 
 export default rootReducer;

@@ -1,9 +1,11 @@
+import React from "react";
 import Dashboard from "../views/Dashboard/Dashboard.jsx";
 // import Notifications from "views/Notifications/Notifications.jsx";
 // import Icons from "views/Icons/Icons.jsx";
 // import Typography from "views/Typography/Typography.jsx";
 // import TableList from "views/TableList/TableList.jsx";
 import Maps from "../views/Maps/Maps.jsx";
+import { connect } from "react-redux";
 // import Upgrade from "views/Upgrade/Upgrade.jsx";
 import UserPage from "../views/UserPage/UserPage.jsx";
 import StudentAttendance from "../views/Admin/Attendance/StudentAttendance.jsx";
@@ -112,13 +114,7 @@ var dashRoutes = [
     icon: "location_map-big",
     component: Maps
   },
-  // {
-  //   path: "/dashboard/notifications",
-  //   name: "Notifications",
-  //   exact: true,
-  //   icon: "ui-1_bell-53",
-  //   component: Notifications
-  // },
+  
   {
     path: "/dashboard/user-page",
     name: "User Profile",
@@ -126,33 +122,6 @@ var dashRoutes = [
     icon: "users_single-02",
     component: UserPage
   }
-  // {
-  //   path: "/dashboard/extended-tables",
-  //   name: "Table List",
-  //   exact: true,
-  //   icon: "files_paper",
-  //   component: TableList
-  // },
-  // {
-  //   path: "/dashboard/typography",
-  //   name: "Typography",
-  //   exact: true,
-  //   icon: "design-2_ruler-pencil",
-  //   component: Typography
-  // },
-  // {
-  //   pro: true,
-  //   path: "/dashboard/upgrade",
-  //   exact: true,
-  //   name: "Upgrade to PRO",
-  //   icon: "objects_spaceship",
-  //   component: Upgrade
-  // },
-  // {
-  //   redirect: true,
-  //   path: "/dashboard",
-  //   pathTo: "/dashboard",
-  //   name: "Dashboard"
-  // }
 ];
+
 export default dashRoutes;

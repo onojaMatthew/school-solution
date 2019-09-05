@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   Card,
   CardHeader,
@@ -9,7 +10,11 @@ import {
   Col,
   Table
 } from "reactstrap";
-
+import { 
+  createAcademicInfo, 
+  updateAcademicInfo, 
+  fetchAcademicInfo 
+} from "../../store/actions/actions_academic_info";
 import { PanelHeader, Stats, CardCategory, Tasks } from "../../components";
 import { tasks } from "../../variables/general.jsx";
 
@@ -21,6 +26,7 @@ class Dashboard extends React.Component {
     currentTerm: "First Term"
   }
 
+  // Toggles form view
   toggleIsUpdate = () => {
     this.setState((prevState) => {
       return {
@@ -29,6 +35,18 @@ class Dashboard extends React.Component {
     });
   }
 
+  // Handles form input changes
+  handleChange = (field, e) => {
+    let fields = this.state.fields;
+    fields[field] = e.target.value;
+    this.setState({ fields});
+  }
+
+  handleFormValidation = () => {
+    const fields = this.state.fields
+  }
+
+  // renders update form
   renderForm = () => {
     const { term, isUpdate } = this.state;
     const date = new Date();
@@ -65,6 +83,7 @@ class Dashboard extends React.Component {
   }
   render() { 
     const {term, isUpdate } = this.state;
+    console.log(this.props, " from Dashboard")
     
     return (
       <div>
@@ -262,4 +281,19 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    academic: state.academic
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  const dispatchProps = {
+    createAcademicInfo: (userType, token, data) => dispatch(createAcademicInfo(userType, token, data)),
+    updateAcademicInfo: (userType, token, data) => dispatch(updateAcademicInfo(userType, token, data)),
+    fetchAcademicInfo: () => dispatch(fetchAcademicInfo())
+  }
+  return dispatchProps;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
