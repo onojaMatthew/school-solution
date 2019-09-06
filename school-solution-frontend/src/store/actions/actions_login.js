@@ -43,7 +43,7 @@ export const userLogin = (data, userType) => {
       .then(response => response.json())
       .then(resp => {
         dispatch(userLoginSuccess(resp));
-        Auth.authenticateUser(resp);
+        Auth.authenticateUser(JSON.stringify(resp));
       })
       .catch(err => {
         dispatch(userLoginFailed(err.message));

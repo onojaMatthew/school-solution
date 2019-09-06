@@ -17,13 +17,37 @@ import {
 } from "../../store/actions/actions_academic_info";
 import { PanelHeader, Stats, CardCategory, Tasks } from "../../components";
 import { tasks } from "../../variables/general.jsx";
+import { isAuthenticated } from "../../helper/authenticated"
 
 class Dashboard extends React.Component {
   state = {
-    term: ["First Term", "Second Term", "Third Term"],
+    terms: ["First Term", "Second Term", "Third Term"],
     isUpdate: false,
+    toggleForm: false,
     currentSession: "2019/2020",
-    currentTerm: "First Term"
+    currentTerm: "First Term",
+    session: "",
+    term: "",
+    error: {},
+  }
+
+  async componentWillMount() {
+    const { fetchAcademicInfo, academic } = this.props;
+    try {
+      await fetchAcademicInfo();
+      
+    } catch(err) {
+      
+    }
+  }
+
+  componentWillReceiveProps() {
+    console.log(this.props.academic, " component will rec")
+  }
+  componentDidMount() {
+    const { academic } = this.props;
+    console.log(academic.academic, " did mount")
+    this.setState({}) 
   }
 
   // Toggles form view
@@ -35,42 +59,122 @@ class Dashboard extends React.Component {
     });
   }
 
-  // Handles form input changes
-  handleChange = (field, e) => {
-    let fields = this.state.fields;
-    fields[field] = e.target.value;
-    this.setState({ fields});
+  toggleForm = () => {
+    this.setState((prevState) => {
+      return {
+        isForm: !prevState.isForm
+      }
+    });
   }
 
-  handleFormValidation = () => {
-    const fields = this.state.fields
+  // Handles form submit
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    const { term, session } = this.state;
+    const { createAcademicInfo } = this.props;
+    const { token, user: { _id, userType } } = isAuthenticated();
+    const userId = _id;
+    const data = { term, session, userId }
+    try {
+      await createAcademicInfo(userType, token, data);
+    } catch(err) {
+      console.log(err.message);
+    }
   }
 
+  // Handles update
+  handleUpdate = async (e) => {
+    e.preventDefault();
+    const { term, session } = this.state;
+    const { updateAcademicInfo } = this.props;
+    const { token, user: { _id, userType } } = isAuthenticated();
+    const userId = _id;
+    const data = { term, session, userId }
+    console.log("update")
+    try {
+      await updateAcademicInfo(userType, token, data);
+    } catch(err) {
+      console.log(err.message);
+    }
+  }
+
+  renderButton = () => {
+    const { isUpdate } = this.state;
+    if (isUpdate) {
+      return (
+        <button 
+          className="btn btn-default" 
+          style={{ 
+            float: "right", 
+            marginBottom: 0,
+            border: "0px"
+          }}
+          onClick={this.toggleForm}
+        >
+          Update/Change
+        </button>
+      )
+    } else {
+      return (
+        <button 
+          className="btn btn-default" 
+          style={{ 
+            float: "right", 
+            marginBottom: 0,
+            border: "0px"
+          }}
+          onClick={this.toggleIsUpdate}
+        >
+          Show Form
+        </button>
+      )
+    }
+  }
   // renders update form
   renderForm = () => {
-    const { term, isUpdate } = this.state;
+    const { terms, isUpdate, isForm } = this.state;
     const date = new Date();
-    const selectTerm = term.map(term => (
-      <option value={term}>{term}</option>
+    const selectTerm = terms.map(term => (
+    <option value={term}>{term}</option>
     ));
 
     if (isUpdate) {
       return (
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <select className="form-control">
-              <option>Select Session</option>
-              <option>{`${date.getFullYear()}/${date.getFullYear() + 1}`}</option>
-              <option>{`${date.getFullYear() + 1}/${date.getFullYear() + 2}`}</option>
-              <option>{`${date.getFullYear() + 2}/${date.getFullYear() + 3}`}</option>
-            </select>
-            <select className="form-control">
-              <option>Select Term</option>
-              {selectTerm}
-            </select>
-          </div>
-          <button className="btn btn-primary">Submit</button>
-        </form>
+        <div>
+          {isForm ? (
+            <form onSubmit={this.handleUpdate}>
+              <div className="form-group">
+                <select className="form-control" onChange={(e) => this.setState({ session: e.target.value })}>
+                  <option>Select Session</option>
+                  <option>{`${date.getFullYear()}/${date.getFullYear() + 1}`}</option>
+                  <option>{`${date.getFullYear() + 1}/${date.getFullYear() + 2}`}</option>
+                  <option>{`${date.getFullYear() + 2}/${date.getFullYear() + 3}`}</option>
+                </select>
+                <select className="form-control" onChange={(e) => this.setState({ term: e.target.value })}>
+                  <option>Select Term</option>
+                  {selectTerm}
+                </select>
+              </div>
+              <button className="btn btn-primary">Update</button>
+            </form>
+          ) : (
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <select className="form-control" onChange={(e) => this.setState({ session: e.target.value })}>
+                  <option>Select Session</option>
+                  <option>{`${date.getFullYear()}/${date.getFullYear() + 1}`}</option>
+                  <option>{`${date.getFullYear() + 1}/${date.getFullYear() + 2}`}</option>
+                  <option>{`${date.getFullYear() + 2}/${date.getFullYear() + 3}`}</option>
+                </select>
+                <select className="form-control" onChange={(e) => this.setState({ term: e.target.value })}>
+                  <option>Select Term</option>
+                  {selectTerm}
+                </select>
+              </div>
+              <button className="btn btn-primary">Submit</button>
+            </form>
+          )}
+        </div>
       )
     } else {
       return (
@@ -81,10 +185,10 @@ class Dashboard extends React.Component {
       )
     }
   }
+
   render() { 
-    const {term, isUpdate } = this.state;
-    console.log(this.props, " from Dashboard")
-    
+    const { isUpdate } = this.state;
+   console.log(...this.props.academic.academic, " from render method")
     return (
       <div>
         <PanelHeader
@@ -177,17 +281,7 @@ class Dashboard extends React.Component {
           </Row>
           <Row>
             <Col xs={12} md={9}>
-            <button 
-              className="btn btn-default" 
-              style={{ 
-                float: "right", 
-                marginBottom: 0,
-                border: "0px"
-              }}
-              onClick={this.toggleIsUpdate}
-            >
-              Update/Change
-            </button>
+              {this.renderButton()}
               <Card>
                 <CardHeader>
                   {isUpdate ? "UPDATE CURRENT ACADEMIC INFORMATION" : "CURRENT ACADEMIC SESSION"}

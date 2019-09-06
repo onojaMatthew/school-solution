@@ -31,7 +31,7 @@ export const createAcademicInfoFailed = (error) => {
 export const createAcademicInfo = (userType, token, data) => {
   return dispatch => {
     dispatch(createAcademicInfoStart());
-    fetch(`http://localhost:5000/api/v1/create/${userType}`, {
+    fetch(`http://localhost:4000/api/v1/create/${userType}`, {
       method: "POST",
       headers: {
         ACCEPT: "application/json",
@@ -74,7 +74,7 @@ export const fetchAcademicInfoFailed = (error) => {
 export const fetchAcademicInfo = () => {
   return dispatch => {
     dispatch(fetchAcademicInfoStart());
-    fetch(`http://localhost:5000/api/v1/get/`, {
+    fetch(`http://localhost:4000/api/v1/get/`, {
       method: "GET",
       headers: {
         ACCEPT: "application/json",
@@ -115,17 +115,19 @@ export const updateAcademicInfoFailed = (error) => {
 export const updateAcademicInfo = (userType, token, data) => {
   return dispatch => {
     dispatch(updateAcademicInfoStart());
-    fetch(`http://localhost:5000/api/v1/update/${userType}`, {
-      method: "GET",
+    fetch(`http://localhost:4000/api/v1/update/${userType}`, {
+      method: "PUT",
       headers: {
         ACCEPT: "application/json",
         "Content-Type": "application/json",
+        "x-auth-token": token
       },
       body: JSON.stringify(data)
     })
       .then(response => response.json())
       .then(resp => {
         dispatch(updateAcademicInfoSuccess(resp));
+        dispatch(fetchAcademicInfo());
       })
       .catch(err => {
         dispatch(updateAcademicInfoFailed(err.message));

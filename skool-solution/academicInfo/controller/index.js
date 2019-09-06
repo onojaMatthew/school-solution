@@ -39,6 +39,6 @@ exports.update = (req, res) => {
   if (session) academic.session = session;
   return academic.save((err, data) => {
     if (err) return res.status(400).json({ error: "Something went wrong. Please try again" });
-    res.json("message", "Update successfully");
+    res.json(data);
   });
 }

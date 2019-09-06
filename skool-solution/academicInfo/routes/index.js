@@ -6,7 +6,7 @@ const { requireLogin } = require("../../middleware/auth");
 const router = express.Router();
 
 router.get("/get", fetch);
-router.post("/create", requireLogin, create);
-router.put("/update", requireLogin, update);
+router.post("/create/:userType", requireLogin, create);
+router.put("/update/:userType", requireLogin, update);
 
 module.exports = router;
