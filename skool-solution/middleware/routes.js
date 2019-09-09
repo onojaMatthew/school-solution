@@ -20,6 +20,7 @@ const paymentRoutes = require("../payment/routes");
 const resultRoute = require("../result/routes");
 const apiRoutes = require("../apiDoc/routes");
 const academicRoutes = require("../academicInfo/routes");
+const taskRoutes = require("../task/routes");
 
 module.exports = (app) => {
   app.use("/api/v1", userRoutes);
@@ -43,5 +44,6 @@ module.exports = (app) => {
   app.use("/api/v1", resultRoute);
   app.use("/api/v1", apiRoutes);
   app.use("/api/v1", academicRoutes);
+  app.use("/api/v1", taskRoutes);
   app.use(error);
 }

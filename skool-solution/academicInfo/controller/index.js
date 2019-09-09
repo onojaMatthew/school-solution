@@ -29,16 +29,21 @@ exports.create = async (req, res) => {
 
 // Updates academic information
 exports.update = (req, res) => {
-  const { term, session, userId } = req.body;
+  const { term, session, userId, academicInfoId } = req.body;
   const { userType } = req.params;
   const { user: { _id } } = req;
   if (userType !== "admin") return res.status(400).json({ error: "Only the admin can perform this operation" });
   if (_id !== userId) return res.status(400).json({ error: "You have no access" });
   const academic = new Academic();
-  if (term) academic.term = term;
-  if (session) academic.session = session;
-  return academic.save((err, data) => {
-    if (err) return res.status(400).json({ error: "Something went wrong. Please try again" });
-    res.json(data);
-  });
+  Academic.findByIdAndUpdate(academicInfoId)
+    .then(async (academic) => {
+      if (!academic) return res.status(400).json({ error: "Can find academic information" });
+      if (term) academic.term = term;
+      if (session) academic.session = session;
+      await academic.save();
+      res.json({ message: "Updated successfully" });
+    })
+    .catch(err => {
+      res.json(err.message);
+    });
 }

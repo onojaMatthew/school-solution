@@ -8,7 +8,7 @@ import {
   CardTitle,
   Row,
   Col,
-  Table
+  Tabl
 } from "reactstrap";
 import { 
   createAcademicInfo, 
@@ -17,37 +17,32 @@ import {
 } from "../../store/actions/actions_academic_info";
 import { PanelHeader, Stats, CardCategory, Tasks } from "../../components";
 import { tasks } from "../../variables/general.jsx";
-import { isAuthenticated } from "../../helper/authenticated"
+import { isAuthenticated } from "../../helper/authenticated";
+import Task from "./Tasks";
+import { completeTask, removeTask, addTask, fetchTask } from "../../store/actions/actions_task";
 
 class Dashboard extends React.Component {
   state = {
     terms: ["First Term", "Second Term", "Third Term"],
     isUpdate: false,
     toggleForm: false,
-    currentSession: "2019/2020",
+    currentSession: "2019/2021",
     currentTerm: "First Term",
     session: "",
     term: "",
+    task: "",
     error: {},
   }
 
-  async componentWillMount() {
-    const { fetchAcademicInfo, academic } = this.props;
+  async componentDidMount() {
+    const { fetchAcademicInfo, fetchTask } = this.props;
+    console.log(isAuthenticated())
+    const userId = isAuthenticated().user && isAuthenticated().user._id ? isAuthenticated().user._id : null;
+
     try {
       await fetchAcademicInfo();
-      
-    } catch(err) {
-      
-    }
-  }
-
-  componentWillReceiveProps() {
-    console.log(this.props.academic, " component will rec")
-  }
-  componentDidMount() {
-    const { academic } = this.props;
-    console.log(academic.academic, " did mount")
-    this.setState({}) 
+      await fetchTask(userId)
+    } catch(err) {}
   }
 
   // Toggles form view
@@ -67,7 +62,7 @@ class Dashboard extends React.Component {
     });
   }
 
-  // Handles form submit
+  // Haendles form submit
   handleSubmit = async (e) => {
     e.preventDefault();
     const { term, session } = this.state;
@@ -82,15 +77,47 @@ class Dashboard extends React.Component {
     }
   }
 
+  // Submit task
+  // submitTask = async () => {
+  //   const { task } = this.state;
+  //   const { addTask } = this.props;
+    
+  //   try {
+  //     await addTask(task, userType, token);
+  //   } catch(err) {
+  //     console.log(err.message);
+  //   }
+  // }
+
+  // Handles completed tasks
+  handleCompleteTask = async (taskId) => {
+    const { completeTask } = this.props;
+    const { token, user: { userType, _id } } = isAuthenticated();
+    console.log(taskId, " from handle complete")
+    try {
+      await completeTask(taskId, userType, token, _id);
+    } catch(err) {}
+  }
+
+  handleDeleteTask = async (taskId) => {
+    const { removeTask } = this.props;
+    const { token, user: { userType, _id } } = isAuthenticated();
+    console.log(taskId, " from handle delete");
+    try {
+      await removeTask(taskId, userType, token, _id);
+    } catch(err) {}
+  }
+
   // Handles update
   handleUpdate = async (e) => {
     e.preventDefault();
     const { term, session } = this.state;
     const { updateAcademicInfo } = this.props;
     const { token, user: { _id, userType } } = isAuthenticated();
+    const academicInfo = {...this.props.academic.academic };
+    const academicInfoId = academicInfo[1]._id;
     const userId = _id;
-    const data = { term, session, userId }
-    console.log("update")
+    const data = { term, session, userId, academicInfoId };
     try {
       await updateAcademicInfo(userType, token, data);
     } catch(err) {
@@ -98,10 +125,16 @@ class Dashboard extends React.Component {
     }
   }
 
+  handleInputChange = (e, name) => {
+    const { value } = e.target;
+    this.setState({[name]: value });
+  }
+
   renderButton = () => {
     const { isUpdate } = this.state;
     if (isUpdate) {
       return (
+  
         <button 
           className="btn btn-default" 
           style={{ 
@@ -130,10 +163,13 @@ class Dashboard extends React.Component {
       )
     }
   }
+
+
   // renders update form
   renderForm = () => {
     const { terms, isUpdate, isForm } = this.state;
     const date = new Date();
+    const academicInfo = {...this.props.academic.academic };
     const selectTerm = terms.map(term => (
     <option value={term}>{term}</option>
     ));
@@ -179,26 +215,31 @@ class Dashboard extends React.Component {
     } else {
       return (
         <div className="form-group">
-          <input type="text" value={this.state.currentSession} className="form-control" />
-          <input type="text" value={this.state.currentTerm} className="form-control" />
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Current Session</th>
+                <th>Current Term</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{academicInfo[1] && academicInfo[1].session}</td>
+                <td>{academicInfo[1] && academicInfo[1].term}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      )
+      );
     }
   }
 
   render() { 
     const { isUpdate } = this.state;
-   console.log(...this.props.academic.academic, " from render method")
     return (
       <div>
         <PanelHeader
           size="sm"
-          // content={
-          //   <Line
-          //     data={dashboardPanelChart.data}
-          //     options={dashboardPanelChart.options}
-          //   />
-          // }
         />
         <div className="content">
           <Row>
@@ -280,7 +321,7 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} md={9}>
+            <Col xs={12} md={8}>
               {this.renderButton()}
               <Card>
                 <CardHeader>
@@ -291,82 +332,15 @@ class Dashboard extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col xs={12} md={3}></Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={6}>
-              <Card className="card-tasks">
-                <CardHeader>
-                  <CardCategory>Backend Development</CardCategory>
-                  <CardTitle tag="h4">Tasks</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Tasks tasks={tasks} />
-                </CardBody>
-                <CardFooter>
-                  <hr />
-                  <Stats>
-                    {[
-                      {
-                        i: "now-ui-icons loader_refresh spin",
-                        t: "Updated 3 minutes ago"
-                      }
-                    ]}
-                  </Stats>
-                </CardFooter>
-              </Card>
-            </Col>
-            <Col xs={12} md={6}>
-              <Card>
-                <CardHeader>
-                  <CardCategory>All Persons List</CardCategory>
-                  <CardTitle tag="h4">Employees Stats</CardTitle>
-                </CardHeader>
-                <CardBody>
-                  <Table responsive>
-                    <thead className=" text-primary">
-                      <tr>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th className="text-right">Salary</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td className="text-right">$36,738</td>
-                      </tr>
-                      <tr>
-                        <td>Minerva Hooper</td>
-                        <td>Curaçao</td>
-                        <td>Sinaai-Waas</td>
-                        <td className="text-right">$23,789</td>
-                      </tr>
-                      <tr>
-                        <td>Sage Rodriguez</td>
-                        <td>Netherlands</td>
-                        <td>Baileux</td>
-                        <td className="text-right">$56,142</td>
-                      </tr>
-                      <tr>
-                        <td>Doris Greene</td>
-                        <td>Malawi</td>
-                        <td>Feldkirchen in Kärnten</td>
-                        <td className="text-right">$63,542</td>
-                      </tr>
-                      <tr>
-                        <td>Mason Porter</td>
-                        <td>Chile</td>
-                        <td>Gloucester</td>
-                        <td className="text-right">$78,615</td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </CardBody>
-              </Card>
+            <Col xs={12} md={4}>
+              <Task 
+                addTask={this.props.addTask}
+                handleInputChange={this.handleInputChange}
+                submitTask={this.submitTask}
+                handleCompleteTask={this.handleCompleteTask}
+                handleDeleteTask={this.handleDeleteTask}
+                tasks={this.props.task}
+              />
             </Col>
           </Row>
         </div>
@@ -377,7 +351,8 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    academic: state.academic
+    academic: state.academic,
+    task: state.task,
   }
 }
 
@@ -385,7 +360,11 @@ const mapDispatchToProps = (dispatch) => {
   const dispatchProps = {
     createAcademicInfo: (userType, token, data) => dispatch(createAcademicInfo(userType, token, data)),
     updateAcademicInfo: (userType, token, data) => dispatch(updateAcademicInfo(userType, token, data)),
-    fetchAcademicInfo: () => dispatch(fetchAcademicInfo())
+    fetchAcademicInfo: () => dispatch(fetchAcademicInfo()),
+    completeTask: (taskId, userType, token) => dispatch(completeTask(taskId, userType, token)),
+    removeTask: (taskId, userType, token) => dispatch(removeTask(taskId, userType, token)),
+    addTask: (task, userType, token) => dispatch(addTask(task, userType, token)),
+    fetchTask: (userId) => dispatch(fetchTask(userId)),
   }
   return dispatchProps;
 }

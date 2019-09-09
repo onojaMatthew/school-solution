@@ -5,7 +5,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Header, Footer, Sidebar } from "../../components";
 import dashboardRoutes from "../../routes/dashboard.jsx";
-
+import PrivateRoute from "../../helper/PrivateRoute";
 
 var ps;
 
@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
               if (prop.collapse) {
                 return prop.views.map((prop2, key2) => {
                   return (
-                    <Route
+                    <PrivateRoute
                       exact={prop2.exact}
                       path={prop2.path}
                       component={prop2.component}

@@ -6,7 +6,8 @@ import "bootstrap/dist/css/bootstrap.css";
 // import 'materialize-css/dist/css/materialize.min.css';
 import "./assets/scss/now-ui-dashboard.css";
 import "./assets/css/demo.css";
-
+import axios from "axios";
+import { isAuthenticated } from "./helper/authenticated";
 import indexRoutes from "./routes/index.jsx";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -15,6 +16,10 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import reducers from "./store/reducers";
 
+const token = isAuthenticated().token;
+axios.defaults.headers.common = {
+  "x-auth-token": token
+}
 
 const store = createStore(
   reducers,
